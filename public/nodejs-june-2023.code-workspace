@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "../../../Dropbox/nodejs-june-2023"
+		},
+		{
+			"path": "../../nodejs-june-2023(copied)"
+		},
+		{
+			"path": "../../../Dropbox/my own"
+		},
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "web development"
+	}
+}

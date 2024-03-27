@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <title>Bootstrap demo</title>
+    <script>
+        function doPrev(refFile, prevImg) {
+            const [file] = refFile.files
+            if (file) {
+                prevImg.src = URL.createObjectURL(file)
+            }
+        }
+
+        $(document).ready(function(){
+          
+            $("#itxtEmail").blur(function(){
+                // alert();
+                var emailKu = $(this).val();
+                var obj ={
+                    type :"get",
+                    url :"/chk-proemail",
+                    data :{
+                        kuchEmail : emailKu
+                    }
+                }
+
+                $.ajax(obj).done(function(respKuch){
+                    $("#res").html(respKuch);
+
+                }).fail(function(errKuch){
+                    $("#res").html(errKuch);
+                })
+            })
+
+            $("#btnsrch").click(function(){
+            var emailku = $("#itxtEmail").val();
+            var obj ={
+              type :"get",
+              url:"/get-json-prorecord",
+              data :{
+                kuchEmail :emailku
+              }
+            }
+            $.ajax(obj).done(function(respJSONKuch)
+            {
+                alert(JSON.stringify(respJSONKuch));//:-)
+                // //$("#res").html(respKuch);
+                $("#itxtName").val(respJSONKuch[0].name)
+                $("#itxtContact").val(respJSONKuch[0].contact);
+                $("#imgPrev").prop("src","uploads/"+respJSONKuch[0].idpic);
+                
+                $("#idob").val(respJSONKuch[0].dob);
+                $("#itxtGender").val(respJSONKuch[0].gender);
+                $("#icomboProof").val(respJSONKuch[0].idproof);
+                // $("#ipPic").val(respJSONKuch[0].idpic);
+                $("#itxtAddress").val(respJSONKuch[0].address);
+                $("#icomboState").val(respJSONKuch[0].state);
+                $("#icomboCity").val(respJSONKuch[0].city);
+                $("#hdn").val(respJSONKuch[0].idpic);
+
+
+                
+
+
+            }).fail(function(errKuch){
+                 alert(errKuch)
+                //$("#res").html(respKuch);
+            })
+
+          })
+
+        //   $("#btnUpdate").click(function(){
+        //     var emailKu = $("#itxtEmail").val();
+        //     var pwdku = $("#itxtPwd").val();
+        //     var typeku = $("#ichomboType").val();
+
+        //     var obj = {
+        //       type:"get",
+        //       url:"/update-prodata",
+        //       data :{
+        //         kuchEmail : emailKu,
+        //         kuchPwd : pwdku,
+        //         kuchType : typeku
+        //       }
+        //     }
+
+        //     $.ajax(obj).done(function(respKuch){
+        //       $("#res").html(respKuch);
+        //     }).fail(function(errkuch){
+        //       $("#res").html(errkuch);
+        //     })
+        //   })
+        //   =================
+        //   $(document).ajaxStart(function(){
+        //     $("#wait").css("display","block");
+        //   });
+
+        //   $(document).ajaxStop(function(){
+        //     $("#wait").css("display","none");
+        //   });
+        })
+
+
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <h3>
+            <p class="text-center">Profile Page</p>
+
+        </h3>
+        <form class="row g-3" method="post" enctype="multipart/form-data">
+            <input type="hidden" id="hdn" name="hdn">
+            <div class="col-md-6">
+                <label for="itxtEmail" class="form-label">Email</label>
+                <input type="email" name="txtEmail" class="form-control" id="itxtEmail"><span id="res">*</span>
+            </div>
+            <div class="col-md-6">
+                <button type="button" class="btn btn-outline-primary form-check" id="btnsrch" >Search</button>
+            </div>
+            <div class="col-md-6">
+                <label for="itxtName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="itxtName" name="txtName" placeholder="1234 Main St">
+            </div>
+            <div class="col-md-6">
+                <label for="itxtContact" class="form-label">Contact</label>
+                <input type="text" class="form-control" name="txtContact" id="itxtContact">
+            </div>
+            <div class="col-md-4">
+                <label for="itxtAddress" class="form-label">Address</label>
+                <input type="text" name="txtAddress" class="form-control" id="itxtAddress" placeholder="1234 Main St">
+            </div>
+            <div class="col-md-4">
+                <label for="icomboCity" class="form-label">City</label>
+                <select id="icomboCity" name="chooseCity" class="form-select">
+                    <option selected>Choose...</option>
+                    <option>vbbfhvbfd</option>
+                    <option>fjcktvk</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="icomboState" class="form-label">State</label>
+                <select id="icomboState" name="chooseState" class="form-select">
+                    <option selected>Choose...</option>
+                    <option>vbbfhvbfd</option>
+                    <option>fjcktvk</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label for="idob" class="form-label">Date Of Birth</label>
+                <input type="date" class="form-control" name="txtDob" id="idob">
+            </div>
+
+            <div class="col-md-6">
+                <label for="itxtGender" class="form-label">Gender</label>
+                <select id="itxtGender" name="chooseGender" class="form-select">
+                    <option selected>Choose...</option>
+                    <option>Female</option>
+                    <option>Male</option>
+                    <option>Other</option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label for="icomboProof" class="form-label">Id Proof</label>
+                <select id="icomboProof" name="chooseIdProof" class="form-select">
+                    <option selected>Choose...</option>
+                    <option>Adhaar Card</option>
+                    <option>License</option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label for="ipPic" class="form-label">Upload File</label>
+                <input type="file" class="form-control" onchange="doPrev(this,imgPrev)" id="ipPic" name="pPic" accept="image/*">
+
+            </div>
+            <div class="col-md-4 mb-5">
+                <img src="" id="imgPrev" alt="" width="100" height="100">
+            </div>
+
+
+            <div class="row">
+                <div class="col-1 ">
+                    
+                        <button type="submit" class="btn btn-primary" formaction="/db-save-process">submit</button>
+                        <!-- <button type="button" class="btn btn-primary" id="btnsub" >submit</button> -->
+
+                    
+                </div>
+                <div class="col-1">
+                   
+                        <button type="submit" class="btn btn-primary" formaction="/db-update-process">Update</button>
+                        <!-- <button type="button" class="btn btn-primary" id="btnupt" >Update</button> -->
+
+                
+                </div>
+                <div class="col-1">
+                   
+                    <button type="submit" class="btn btn-primary" formaction="/db-delete-process">delete</button>
+                    <!-- <button type="buuton" class="btn btn-primary" id="btnDlt">delete</button> -->
+
+            
+            </div>
+            </div>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
